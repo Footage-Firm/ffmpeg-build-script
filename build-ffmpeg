@@ -402,12 +402,12 @@ if $NONFREE_AND_GPL; then
   CONFIGURE_OPTIONS+=("--enable-openssl")
 fi
 
-if build "cmake"; then
-  download "https://cmake.org/files/LatestRelease/cmake-3.21.0.tar.gz"
+if build "cmake" "3.22.0"; then
+  download "https://github.com/Kitware/CMake/releases/download/v3.22.0/cmake-3.22.0.tar.gz"
   execute ./configure --prefix="${WORKSPACE}" --parallel="${MJOBS}" -- -DCMAKE_USE_OPENSSL=OFF
   execute make -j $MJOBS
   execute make install
-  build_done "cmake"
+  build_done "cmake" "3.22.0"
 fi
 
 if ! $MACOS_M1; then
