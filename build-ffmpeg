@@ -319,13 +319,13 @@ if command_exists "python"; then
     build_done "serd"
   fi
 
-  if build "pcre"; then
-    download "https://ftp.pcre.org/pub/pcre/pcre-8.44.tar.gz" "pcre-8.44.tar.gz"
+  if build "pcre" "8.45"; then
+    download "https://altushost-swe.dl.sourceforge.net/project/pcre/pcre/8.45/pcre-8.45.tar.gz" "pcre-8.45.tar.gz"
     execute ./configure --prefix="${WORKSPACE}" --disable-shared --enable-static
     execute make -j $MJOBS
     execute make install
 
-    build_done "pcre"
+    build_done "pcre" "8.45"
   fi
 
   if build "sord"; then
