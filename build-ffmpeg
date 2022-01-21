@@ -620,14 +620,14 @@ if build "libtiff"; then
   build_done "libtiff"
 fi
 
-if build "libpng"; then
-  download "https://deac-riga.dl.sourceforge.net/project/libpng/libpng16/1.6.37/libpng-1.6.37.tar.gz"
+if build "libpng" "1.6.37"; then
+  download "https://sourceforge.net/projects/libpng/files/libpng16/1.6.37/libpng-1.6.37.tar.gz/download?use_mirror=gigenet" "libpng-1.6.37.tar.gz"
   export LDFLAGS="${LDFLAGS}"
   export CPPFLAGS="${CFLAGS}"
   execute ./configure --prefix="${WORKSPACE}" --disable-shared --enable-static
   execute make -j $MJOBS
   execute make install
-  build_done "libpng"
+  build_done "libpng" "1.6.37"
 fi
 
 ##
