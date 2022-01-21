@@ -634,18 +634,23 @@ fi
 ## image library
 ##
 
-if build "libwebp"; then
-  download "https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-1.2.0.tar.gz" "libwebp-1.2.0.tar.gz"
-  execute ./configure --prefix="${WORKSPACE}" --disable-shared --enable-static
-  make_dir build
-  cd build || exit
-  execute cmake -DCMAKE_INSTALL_PREFIX="${WORKSPACE}" -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_BINDIR=bin -DCMAKE_INSTALL_INCLUDEDIR=include -DENABLE_SHARED=OFF -DENABLE_STATIC=ON ../
-  execute make -j $MJOBS
-  execute make install
+## does not compile on monterey -> _PrintGifError
+if [[ "$OSTYPE" != "darwin"* ]]; then
+  if build "libwebp" "1.2.1"; then
+    # libwebp can fail to compile on Ubuntu if these flags were left set to CFLAGS
+    CPPFLAGS=
+    download "https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-1.2.1.tar.gz" "libwebp-1.2.1.tar.gz"
+    execute ./configure --prefix="${WORKSPACE}" --disable-shared --enable-static --disable-dependency-tracking --disable-gl --with-zlib-include="${WORKSPACE}"/include/ --with-zlib-lib="${WORKSPACE}"/lib
+    make_dir build
+    cd build || exit
+    execute cmake -DCMAKE_INSTALL_PREFIX="${WORKSPACE}" -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_BINDIR=bin -DCMAKE_INSTALL_INCLUDEDIR=include -DENABLE_SHARED=OFF -DENABLE_STATIC=ON ../
+    execute make -j $MJOBS
+    execute make install
 
-  build_done "libwebp"
+    build_done "libwebp" "1.2.1"
+  fi
+  CONFIGURE_OPTIONS+=("--enable-libwebp")
 fi
-CONFIGURE_OPTIONS+=("--enable-libwebp")
 
 ##
 ## other library
