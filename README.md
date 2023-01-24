@@ -1,3 +1,6 @@
+# This project is archived!
+We are no longer using this fork to build ffmpeg, we use the main `ffmpeg-build-script` repo.
+
 [![build test](https://github.com/markus-perl/ffmpeg-build-script/workflows/build%20test/badge.svg?branch=master)](https://github.com/markus-perl/ffmpeg-build-script/actions)
 
 ![FFmpeg build script](https://raw.github.com/markus-perl/ffmpeg-build-script/master/ffmpeg-build-script.png)
